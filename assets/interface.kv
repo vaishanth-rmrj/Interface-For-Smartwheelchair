@@ -1,0 +1,159 @@
+<InterfaceScreenManager>
+    StartScreen:
+    ControlScreen:
+
+<StartScreen>
+    name: "start_screen"
+    MDTopAppBar:
+        title: "Smart Wheelchair"
+        pos_hint: {"top": 1.0}
+        elevation: 4
+        anchor_title: "center"
+
+    Button:
+        text: "Start"
+        font_size: 25
+        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+        size: (150, 150 )
+        size_hint: (.3, .3)
+        background_color: 0, 0, 0, 0
+        on_press: 
+            root.manager.current = "control_screen"
+            root.manager.transition.direction = "left"
+        
+        Image:
+            source: "assets/images/start-button.png"
+            center_x: self.parent.center_x
+            center_y: self.parent.center_y
+
+<ControlScreen>
+    name: "control_screen"
+    MDBoxLayout:
+        orientation: "vertical"
+
+        MDTopAppBar:
+            title: "Smart Wheelchair"
+            elevation: 4
+            right_action_items: [["dots-vertical", lambda x: app.callback()]]
+
+        MDBoxLayout:
+            orientation: "vertical"
+            MDGridLayout:
+                # md_bg_color: 0, 1, 1, 1  
+                cols: 1
+                size_hint: None, None
+                size: root.width, root.height * 0.75
+
+                ScreenManager:
+                    id: screen_manager
+
+                    MDScreen:
+                        name: "manual_control"
+                        MDBoxLayout:
+                            orientation: "vertical"
+
+                            MDGridLayout:
+                                # md_bg_color: 0, 1, 1, 1  
+                                cols: 1
+                                size_hint: None, None
+                                size: root.width, root.height * 0.1
+                                MDLabel:
+                                    text: "Use the arrows to control the wheelchair manually."
+                                    pos_hint: {"center_y": 0.5}
+                                    halign: "center"
+                            
+                            MDFloatLayout:
+                                MDIconButton:
+                                    icon: "arrow-up"
+                                    icon_color: "white"
+                                    md_bg_color: "green"
+                                    icon_size: 50.0
+                                    pos_hint: {'x':.5, 'y':.65}
+
+                                MDIconButton:
+                                    icon: "arrow-left"
+                                    icon_color: "white"
+                                    icon_size: 50.0
+                                    md_bg_color: "green"
+                                    pos_hint: {'x':.35, 'y':.4}
+
+                                MDIconButton:
+                                    icon: "arrow-right"
+                                    icon_color: "white"
+                                    icon_size: 50.0
+                                    md_bg_color: "green"
+                                    pos_hint: {'x':.65, 'y':.4}
+
+                                MDIconButton:
+                                    icon: "arrow-down"
+                                    icon_color: "white"
+                                    icon_size: 50.0
+                                    md_bg_color: "green"
+                                    pos_hint: {'x':.5, 'y':.15}
+
+
+                        
+
+                    MDScreen:
+                        name: "semi_auto_control"
+                        MDLabel:
+                            text: "Semi-Autonomous Control"
+                            pos_hint: {"center_y": 0.5}
+                            halign: "center"
+
+                    MDScreen:
+                        name: "auto_control"
+                        MDLabel:
+                            text: "Autonomous Control"
+                            pos_hint: {"center_y": 0.5}
+                            halign: "center"
+            # bottom nav
+            MDFloatLayout:
+                MDGridLayout:                
+                    md_bg_color: 63/255.0, 81/255.0, 181/255.0, 1  
+                    cols: 4
+                    padding: 20
+                    spacing: 20, 20
+
+                    MDRoundFlatButton:
+                        text: "Manual"
+                        text_color: "white"
+                        font_style: "Button"  
+                        line_width: 1.5
+                        line_color: "white"
+                        on_release:
+                            screen_manager.current = "manual_control"
+
+                    MDRoundFlatButton:
+                        text: "Semi-autonomus"
+                        text_color: "white"
+                        font_style: "Button"
+                        line_width: 1.5
+                        line_color: "white"
+                        on_release:
+                            screen_manager.current = "semi_auto_control"
+
+
+                    MDRoundFlatButton:
+                        text: "Autonomous"
+                        text_color: "white"
+                        font_style: "Button"
+                        line_width: 1.5
+                        line_color: "white"
+                        on_release:
+                            screen_manager.current = "auto_control"
+
+
+                MDIconButton:
+                    icon: "stop"
+                    icon_color: "white"
+                    md_bg_color: "red"
+                    pos_hint: {'x':.9, 'y':.25}
+                    on_release:
+                        root.manager.current = "start_screen"
+                
+                
+
+
+
+        
